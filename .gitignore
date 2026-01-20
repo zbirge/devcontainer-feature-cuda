@@ -12,3 +12,20 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Claude Code
+.claude/settings.local.json
+.claude.backup.*
+*.backup
+.claude/rules/custom/*
+!.claude/rules/custom/python-rules.md
+!.claude/rules/custom/typescript-rules.md
+.claude/config/
+tmp/
+context/
+CLAUDE.local.md
+
+# Build artifacts
+.claude/bin/
+.claude/installer/
+docs/plans
