@@ -12,6 +12,7 @@
       "Bash(git pull:*)",
       "Bash(git branch:*)",
       "mcp__server-git__git_status",
+      "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run:*",
       "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run list --repo zbirge/devcontainer-feature-cuda --limit 5)",
       "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run view 21180481371 --repo zbirge/devcontainer-feature-cuda)",
       "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run view 21180481371 --repo zbirge/devcontainer-feature-cuda --job 60924257679 --log)",
@@ -21,7 +22,9 @@
       "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run view 21181501936 --repo zbirge/devcontainer-feature-cuda --job 60924753054 --log)",
       "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run view 21181501936 --repo zbirge/devcontainer-feature-cuda --job 60924753064 --log)",
       "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run view 21181501936 --repo zbirge/devcontainer-feature-cuda --job 60924753153 --log)",
-      "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run view 21181730099 --repo zbirge/devcontainer-feature-cuda --log)"
+      "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run view 21181730099 --repo zbirge/devcontainer-feature-cuda --log)",
+      "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run list --repo zbirge/devcontainer-feature-cuda --limit 2)",
+      "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run view 21181980175 --repo zbirge/devcontainer-feature-cuda --log)"
     ]
   }
 }

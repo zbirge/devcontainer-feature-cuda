@@ -29,24 +29,6 @@
             }
         }
     },
-    "cuda-with-cudnn": {
-        "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
-        "features": {
-            "nvidia-cuda": {
-                "cudaVersion": "12.4",
-                "installCudnn": true
-            }
-        }
-    },
-    "cuda-with-toolkit": {
-        "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
-        "features": {
-            "nvidia-cuda": {
-                "cudaVersion": "12.4",
-                "installToolkit": true
-            }
-        }
-    },
     "debian-12": {
         "image": "mcr.microsoft.com/devcontainers/base:debian-12",
         "features": {
