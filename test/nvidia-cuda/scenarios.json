@@ -1,0 +1,90 @@
+{
+    "default": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+        "features": {
+            "nvidia-cuda": {}
+        }
+    },
+    "cuda-12.6-ubuntu-24.04": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+        "features": {
+            "nvidia-cuda": {
+                "cudaVersion": "12.6"
+            }
+        }
+    },
+    "cuda-12.4-ubuntu-22.04": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+        "features": {
+            "nvidia-cuda": {
+                "cudaVersion": "12.4"
+            }
+        }
+    },
+    "cuda-11.8-ubuntu-20.04": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu-20.04",
+        "features": {
+            "nvidia-cuda": {
+                "cudaVersion": "11.8"
+            }
+        }
+    },
+    "cuda-11.4-ubuntu-18.04": {
+        "image": "ubuntu:18.04",
+        "features": {
+            "nvidia-cuda": {
+                "cudaVersion": "11.4"
+            }
+        }
+    },
+    "cuda-with-cudnn": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+        "features": {
+            "nvidia-cuda": {
+                "cudaVersion": "12.4",
+                "installCudnn": true
+            }
+        }
+    },
+    "cuda-with-toolkit": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+        "features": {
+            "nvidia-cuda": {
+                "cudaVersion": "12.4",
+                "installToolkit": true
+            }
+        }
+    },
+    "debian-13": {
+        "image": "debian:trixie",
+        "features": {
+            "nvidia-cuda": {
+                "cudaVersion": "12.6"
+            }
+        }
+    },
+    "debian-12": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian-12",
+        "features": {
+            "nvidia-cuda": {
+                "cudaVersion": "12.4"
+            }
+        }
+    },
+    "debian-11": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian-11",
+        "features": {
+            "nvidia-cuda": {
+                "cudaVersion": "11.8"
+            }
+        }
+    },
+    "debian-10": {
+        "image": "debian:buster",
+        "features": {
+            "nvidia-cuda": {
+                "cudaVersion": "11.4"
+            }
+        }
+    }
+}

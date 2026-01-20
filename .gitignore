@@ -1,0 +1,14 @@
+# Output directory
+output/
+
+# Node modules (if using devcontainer CLI locally)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo

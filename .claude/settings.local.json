@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:developer.download.nvidia.com)",
+      "Bash(git init:*)",
+      "Bash(gh repo create:*)",
+      "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" repo create zbirge/devcontainer-feature-cuda --public --description \"Dev container feature for NVIDIA CUDA with multi-distro support\" --source=. --remote=origin)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nInitial commit: NVIDIA CUDA dev container feature\n\n- Support for Ubuntu 18.04, 20.04, 22.04, 24.04\n- Support for Debian 10, 11, 12, 13\n- Automatic OS detection at install time\n- Options for CUDA version, cuDNN, NVTX, and toolkit\n- CI/CD workflows for testing and GHCR publishing\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+    ]
+  }
+}

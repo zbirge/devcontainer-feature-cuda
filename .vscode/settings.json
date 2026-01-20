@@ -1,0 +1,5 @@
+{
+    "snyk.advanced.autoSelectOrganization": true,
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "GitHub Dark Dimmed"
+}
