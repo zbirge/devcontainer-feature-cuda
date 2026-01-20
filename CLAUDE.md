@@ -46,14 +46,14 @@ test/nvidia-cuda/
 **OS Auto-Detection**: The `install.sh` script reads `/etc/os-release` to determine the distribution and version, then constructs the appropriate NVIDIA repository URL.
 
 **Supported Platforms**:
-- Ubuntu: 18.04, 20.04, 22.04, 24.04
-- Debian: 10, 11, 12, 13
+- Ubuntu: 20.04, 22.04, 24.04
+- Debian: 11, 12
 
 **NVIDIA Repository**: All supported distros are listed at `https://developer.download.nvidia.com/compute/cuda/repos/`. Use this URL to verify available versions when updating supported platforms. Additional distros available (not yet implemented): Fedora, RHEL, Amazon Linux, Azure Linux, openSUSE, SLES.
 
 **Version Constraints**:
 - Debian 12 and Ubuntu 22.04 require CUDA 11.7+
-- Ubuntu 24.04 and Debian 13 require CUDA 12.4+
+- Ubuntu 24.04 requires CUDA 12.4+
 
 ## Reference Resources
 

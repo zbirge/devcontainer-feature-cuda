@@ -5,7 +5,7 @@
 #-------------------------------------------------------------------------------------------------------------------------
 #
 # Installs NVIDIA CUDA libraries with automatic OS detection.
-# Supports: Ubuntu 18.04, 20.04, 22.04, 24.04 and Debian 10, 11, 12, 13
+# Supports: Ubuntu 20.04, 22.04, 24.04 and Debian 11, 12
 #
 set -e
 
@@ -45,24 +45,21 @@ get_distro_string() {
     case "${distro_id}" in
         ubuntu)
             case "${version_id}" in
-                18.04) echo "ubuntu1804" ;;
                 20.04) echo "ubuntu2004" ;;
                 22.04) echo "ubuntu2204" ;;
                 24.04) echo "ubuntu2404" ;;
                 *)
-                    echo "Unsupported Ubuntu version: ${version_id}. Supported versions: 18.04, 20.04, 22.04, 24.04" >&2
+                    echo "Unsupported Ubuntu version: ${version_id}. Supported versions: 20.04, 22.04, 24.04" >&2
                     exit 1
                     ;;
             esac
             ;;
         debian)
             case "${version_id}" in
-                10) echo "debian10" ;;
                 11) echo "debian11" ;;
                 12) echo "debian12" ;;
-                13) echo "debian13" ;;
                 *)
-                    echo "Unsupported Debian version: ${version_id}. Supported versions: 10, 11, 12, 13" >&2
+                    echo "Unsupported Debian version: ${version_id}. Supported versions: 11, 12" >&2
                     exit 1
                     ;;
             esac
@@ -110,8 +107,8 @@ validate_cuda_version() {
         fi
     fi
 
-    # Ubuntu 24.04 and Debian 13 (trixie) require CUDA 12.4+
-    if [ "${DISTRO_STRING}" = "ubuntu2404" ] || [ "${DISTRO_STRING}" = "debian13" ]; then
+    # Ubuntu 24.04 requires CUDA 12.4+
+    if [ "${DISTRO_STRING}" = "ubuntu2404" ]; then
         if [ "${cuda_major}" -lt 12 ] || ([ "${cuda_major}" -eq 12 ] && [ "${cuda_minor}" -lt 4 ]); then
             echo "Error: ${ID} ${VERSION_ID} requires CUDA 12.4 or later. Requested: ${CUDA_VERSION}"
             exit 1

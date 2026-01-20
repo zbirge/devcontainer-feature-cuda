@@ -16,8 +16,8 @@ This feature automatically detects the OS and uses the appropriate NVIDIA reposi
 
 | Distribution | Versions | Minimum CUDA |
 |-------------|----------|--------------|
-| Ubuntu | 18.04, 20.04, 22.04, 24.04 | 11.2 (18.04/20.04), 11.7 (22.04), 12.4 (24.04) |
-| Debian | 10, 11, 12, 13 | 11.2 (10/11), 11.7 (12), 12.4 (13) |
+| Ubuntu | 20.04, 22.04, 24.04 | 11.2 (20.04), 11.7 (22.04), 12.4 (24.04) |
+| Debian | 11, 12 | 11.2 (11), 11.7 (12) |
 
 ## GPU Configuration in devcontainer.json
 
