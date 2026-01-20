@@ -20,7 +20,8 @@
       "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run view 21181501936 --repo zbirge/devcontainer-feature-cuda)",
       "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run view 21181501936 --repo zbirge/devcontainer-feature-cuda --job 60924753054 --log)",
       "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run view 21181501936 --repo zbirge/devcontainer-feature-cuda --job 60924753064 --log)",
-      "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run view 21181501936 --repo zbirge/devcontainer-feature-cuda --job 60924753153 --log)"
+      "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run view 21181501936 --repo zbirge/devcontainer-feature-cuda --job 60924753153 --log)",
+      "Bash(\"C:\\\\Program Files\\\\GitHub CLI\\\\gh.exe\" run view 21181730099 --repo zbirge/devcontainer-feature-cuda --log)"
     ]
   }
 }
