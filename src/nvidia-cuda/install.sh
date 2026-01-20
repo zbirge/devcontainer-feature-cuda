@@ -224,3 +224,5 @@ echo "  - Architecture: ${architecture}"
 [ "${INSTALL_CUDNN_DEV}" = "true" ] && echo "  - cuDNN Dev: installed"
 [ "${INSTALL_NVTX}" = "true" ] && echo "  - NVTX: installed"
 [ "${INSTALL_TOOLKIT}" = "true" ] && echo "  - Toolkit: installed"
+
+exit 0
