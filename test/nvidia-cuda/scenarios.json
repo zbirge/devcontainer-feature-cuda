@@ -49,7 +49,7 @@
         "image": "mcr.microsoft.com/devcontainers/base:debian-13",
         "features": {
             "nvidia-cuda": {
-                "cudaVersion": "13.1"
+                "cudaVersion": "12.6"
             }
         }
     }

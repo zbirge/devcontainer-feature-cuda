@@ -30,7 +30,7 @@ Add the feature to your `devcontainer.json`:
 | Distribution | Versions | Minimum CUDA |
 |-------------|----------|--------------|
 | Ubuntu | 20.04, 22.04, 24.04 | 11.2 / 11.7 / 12.4 |
-| Debian | 11, 12, 13 | 11.2 / 11.7 / 13.1 |
+| Debian | 11, 12, 13 | 11.2 / 11.7 / 11.7 |
 
 ## GPU Access
 

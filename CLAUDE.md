@@ -52,9 +52,10 @@ test/nvidia-cuda/
 **NVIDIA Repository**: All supported distros are listed at `https://developer.download.nvidia.com/compute/cuda/repos/`. Use this URL to verify available versions when updating supported platforms. Additional distros available (not yet implemented): Fedora, RHEL, Amazon Linux, Azure Linux, openSUSE, SLES.
 
 **Version Constraints**:
-- Debian 12 and Ubuntu 22.04 require CUDA 11.7+
+- Debian 12, 13 and Ubuntu 22.04 require CUDA 11.7+
 - Ubuntu 24.04 requires CUDA 12.4+
-- Debian 13 requires CUDA 13.1+
+
+**Note**: Debian 13 (trixie) uses the Debian 12 NVIDIA repository because the native Debian 13 repo is incomplete (missing cuDNN packages). The Debian 12 packages are binary-compatible with Debian 13.
 
 ## Reference Resources
 

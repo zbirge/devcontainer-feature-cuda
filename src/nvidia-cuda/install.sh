@@ -58,7 +58,10 @@ get_distro_string() {
             case "${version_id}" in
                 11) echo "debian11" ;;
                 12) echo "debian12" ;;
-                13) echo "debian13" ;;
+                # Debian 13 (trixie) uses the debian12 NVIDIA repo because the
+                # native debian13 repo is incomplete (missing cuDNN packages).
+                # The debian12 packages are binary-compatible with Debian 13.
+                13) echo "debian12" ;;
                 *)
                     echo "Unsupported Debian version: ${version_id}. Supported versions: 11, 12, 13" >&2
                     exit 1
@@ -115,14 +118,6 @@ validate_cuda_version() {
             exit 1
         fi
     fi
-
-    # Debian 13 (trixie) requires CUDA 13.1+
-    if [ "${DISTRO_STRING}" = "debian13" ]; then
-        if [ "${cuda_major}" -lt 13 ] || ([ "${cuda_major}" -eq 13 ] && [ "${cuda_minor}" -lt 1 ]); then
-            echo "Error: ${ID} ${VERSION_ID} requires CUDA 13.1 or later. Requested: ${CUDA_VERSION}"
-            exit 1
-        fi
-    fi
 }
 
 validate_cuda_version
@@ -174,11 +169,11 @@ if [ "${INSTALL_CUDNN}" = "true" ] || [ "${INSTALL_CUDNN_DEV}" = "true" ]; then
     if [ "${CUDNN_VERSION}" = "automatic" ]; then
         # Find the latest compatible cuDNN runtime package
         # Packages follow the naming convention: libcudnn{CUDNN_MAJOR}-cuda-{CUDA_MAJOR}
-        CUDNN_PACKAGE=$(apt-cache search "^libcudnn[0-9]+-cuda-${CUDA_MAJOR}$" | sort -V | tail -n1 | awk '{print $1}')
+        CUDNN_PACKAGE=$(apt-cache search --names-only "^libcudnn[0-9]+-cuda-${CUDA_MAJOR}$" | sort -V | tail -n1 | awk '{print $1}')
         if [ -z "${CUDNN_PACKAGE}" ]; then
             echo "Warning: Could not find compatible cuDNN package for CUDA ${CUDA_VERSION}. Trying generic search..."
             # Fallback: search for any libcudnn runtime package, excluding dev/jit/static/headers variants
-            CUDNN_PACKAGE=$(apt-cache search "^libcudnn[0-9]+-cuda-[0-9]+$" | sort -V | tail -n1 | awk '{print $1}')
+            CUDNN_PACKAGE=$(apt-cache search --names-only "^libcudnn[0-9]+-cuda-[0-9]+$" | sort -V | tail -n1 | awk '{print $1}')
         fi
         if [ -z "${CUDNN_PACKAGE}" ]; then
             echo "Error: Could not find any cuDNN package"
@@ -200,9 +195,9 @@ if [ "${INSTALL_CUDNN}" = "true" ] || [ "${INSTALL_CUDNN_DEV}" = "true" ]; then
     if [ "${INSTALL_CUDNN_DEV}" = "true" ]; then
         echo "Installing cuDNN development packages..."
         if [ "${CUDNN_VERSION}" = "automatic" ]; then
-            CUDNN_DEV_PACKAGE=$(apt-cache search "^libcudnn[0-9]+-dev-cuda-${CUDA_MAJOR}$" | sort -V | tail -n1 | awk '{print $1}')
+            CUDNN_DEV_PACKAGE=$(apt-cache search --names-only "^libcudnn[0-9]+-dev-cuda-${CUDA_MAJOR}$" | sort -V | tail -n1 | awk '{print $1}')
             if [ -z "${CUDNN_DEV_PACKAGE}" ]; then
-                CUDNN_DEV_PACKAGE=$(apt-cache search "^libcudnn[0-9]+-dev-cuda-[0-9]+$" | sort -V | tail -n1 | awk '{print $1}')
+                CUDNN_DEV_PACKAGE=$(apt-cache search --names-only "^libcudnn[0-9]+-dev-cuda-[0-9]+$" | sort -V | tail -n1 | awk '{print $1}')
             fi
             if [ -n "${CUDNN_DEV_PACKAGE}" ]; then
                 apt-get -y install --no-install-recommends "${CUDNN_DEV_PACKAGE}"
