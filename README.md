@@ -18,7 +18,7 @@ Add the feature to your `devcontainer.json`:
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `cudaVersion` | string | `12.6` | CUDA version to install (12.6, 12.5, 12.4, ... 11.2) |
+| `cudaVersion` | string | `12.6` | CUDA version to install (13.1, 12.6, 12.5, ... 11.2) |
 | `installCudnn` | boolean | `false` | Install cuDNN shared library |
 | `installCudnnDev` | boolean | `false` | Install cuDNN development libraries |
 | `cudnnVersion` | string | `automatic` | cuDNN version (or `automatic`) |
@@ -30,7 +30,7 @@ Add the feature to your `devcontainer.json`:
 | Distribution | Versions | Minimum CUDA |
 |-------------|----------|--------------|
 | Ubuntu | 20.04, 22.04, 24.04 | 11.2 / 11.7 / 12.4 |
-| Debian | 11, 12 | 11.2 / 11.7 |
+| Debian | 11, 12, 13 | 11.2 / 11.7 / 13.1 |
 
 ## GPU Access
 
