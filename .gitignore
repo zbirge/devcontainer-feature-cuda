@@ -24,6 +24,7 @@ Thumbs.db
 tmp/
 context/
 CLAUDE.local.md
+.env
 
 # Build artifacts
 .claude/bin/

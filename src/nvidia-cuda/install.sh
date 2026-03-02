@@ -5,7 +5,7 @@
 #-------------------------------------------------------------------------------------------------------------------------
 #
 # Installs NVIDIA CUDA libraries with automatic OS detection.
-# Supports: Ubuntu 20.04, 22.04, 24.04 and Debian 11, 12
+# Supports: Ubuntu 20.04, 22.04, 24.04 and Debian 11, 12, 13
 #
 set -e
 
@@ -58,8 +58,9 @@ get_distro_string() {
             case "${version_id}" in
                 11) echo "debian11" ;;
                 12) echo "debian12" ;;
+                13) echo "debian13" ;;
                 *)
-                    echo "Unsupported Debian version: ${version_id}. Supported versions: 11, 12" >&2
+                    echo "Unsupported Debian version: ${version_id}. Supported versions: 11, 12, 13" >&2
                     exit 1
                     ;;
             esac
@@ -114,6 +115,14 @@ validate_cuda_version() {
             exit 1
         fi
     fi
+
+    # Debian 13 (trixie) requires CUDA 13.1+
+    if [ "${DISTRO_STRING}" = "debian13" ]; then
+        if [ "${cuda_major}" -lt 13 ] || ([ "${cuda_major}" -eq 13 ] && [ "${cuda_minor}" -lt 1 ]); then
+            echo "Error: ${ID} ${VERSION_ID} requires CUDA 13.1 or later. Requested: ${CUDA_VERSION}"
+            exit 1
+        fi
+    fi
 }
 
 validate_cuda_version
@@ -158,13 +167,18 @@ apt-get -y install --no-install-recommends \
 if [ "${INSTALL_CUDNN}" = "true" ] || [ "${INSTALL_CUDNN_DEV}" = "true" ]; then
     echo "Installing cuDNN..."
 
+    # CUDA major version used for cuDNN package matching
+    CUDA_MAJOR="${CUDA_VERSION%%.*}"
+
     # Determine cuDNN version
     if [ "${CUDNN_VERSION}" = "automatic" ]; then
-        # Find the latest compatible cuDNN version
-        CUDNN_PACKAGE=$(apt-cache search "^libcudnn[0-9]+-cuda-${CUDA_VERSION%%.*}$" | sort -V | tail -n1 | awk '{print $1}')
+        # Find the latest compatible cuDNN runtime package
+        # Packages follow the naming convention: libcudnn{CUDNN_MAJOR}-cuda-{CUDA_MAJOR}
+        CUDNN_PACKAGE=$(apt-cache search "^libcudnn[0-9]+-cuda-${CUDA_MAJOR}$" | sort -V | tail -n1 | awk '{print $1}')
         if [ -z "${CUDNN_PACKAGE}" ]; then
             echo "Warning: Could not find compatible cuDNN package for CUDA ${CUDA_VERSION}. Trying generic search..."
-            CUDNN_PACKAGE=$(apt-cache search "^libcudnn[0-9]+" | grep -v dev | sort -V | tail -n1 | awk '{print $1}')
+            # Fallback: search for any libcudnn runtime package, excluding dev/jit/static/headers variants
+            CUDNN_PACKAGE=$(apt-cache search "^libcudnn[0-9]+-cuda-[0-9]+$" | sort -V | tail -n1 | awk '{print $1}')
         fi
         if [ -z "${CUDNN_PACKAGE}" ]; then
             echo "Error: Could not find any cuDNN package"
@@ -174,8 +188,11 @@ if [ "${INSTALL_CUDNN}" = "true" ] || [ "${INSTALL_CUDNN_DEV}" = "true" ]; then
         apt-get -y install --no-install-recommends "${CUDNN_PACKAGE}"
     else
         # Install specific cuDNN version
+        # Try new naming convention (libcudnn{MAJOR}-cuda-{CUDA_MAJOR}) then old (libcudnn{MAJOR})
         CUDNN_MAJOR="${CUDNN_VERSION%%.*}"
-        apt-get -y install --no-install-recommends "libcudnn${CUDNN_MAJOR}=${CUDNN_VERSION}-1+cuda${CUDA_VERSION%%.*}" || \
+        apt-get -y install --no-install-recommends "libcudnn${CUDNN_MAJOR}-cuda-${CUDA_MAJOR}=${CUDNN_VERSION}-1" || \
+        apt-get -y install --no-install-recommends "libcudnn${CUDNN_MAJOR}=${CUDNN_VERSION}-1+cuda${CUDA_MAJOR}" || \
+        apt-get -y install --no-install-recommends "libcudnn${CUDNN_MAJOR}-cuda-${CUDA_MAJOR}" || \
         apt-get -y install --no-install-recommends "libcudnn${CUDNN_MAJOR}"
     fi
 
@@ -183,15 +200,17 @@ if [ "${INSTALL_CUDNN}" = "true" ] || [ "${INSTALL_CUDNN_DEV}" = "true" ]; then
     if [ "${INSTALL_CUDNN_DEV}" = "true" ]; then
         echo "Installing cuDNN development packages..."
         if [ "${CUDNN_VERSION}" = "automatic" ]; then
-            CUDNN_DEV_PACKAGE=$(apt-cache search "^libcudnn[0-9]+-dev-cuda-${CUDA_VERSION%%.*}$" | sort -V | tail -n1 | awk '{print $1}')
+            CUDNN_DEV_PACKAGE=$(apt-cache search "^libcudnn[0-9]+-dev-cuda-${CUDA_MAJOR}$" | sort -V | tail -n1 | awk '{print $1}')
             if [ -z "${CUDNN_DEV_PACKAGE}" ]; then
-                CUDNN_DEV_PACKAGE=$(apt-cache search "^libcudnn[0-9]+-dev" | sort -V | tail -n1 | awk '{print $1}')
+                CUDNN_DEV_PACKAGE=$(apt-cache search "^libcudnn[0-9]+-dev-cuda-[0-9]+$" | sort -V | tail -n1 | awk '{print $1}')
             fi
             if [ -n "${CUDNN_DEV_PACKAGE}" ]; then
                 apt-get -y install --no-install-recommends "${CUDNN_DEV_PACKAGE}"
             fi
         else
-            apt-get -y install --no-install-recommends "libcudnn${CUDNN_MAJOR}-dev=${CUDNN_VERSION}-1+cuda${CUDA_VERSION%%.*}" || \
+            apt-get -y install --no-install-recommends "libcudnn${CUDNN_MAJOR}-dev-cuda-${CUDA_MAJOR}=${CUDNN_VERSION}-1" || \
+            apt-get -y install --no-install-recommends "libcudnn${CUDNN_MAJOR}-dev=${CUDNN_VERSION}-1+cuda${CUDA_MAJOR}" || \
+            apt-get -y install --no-install-recommends "libcudnn${CUDNN_MAJOR}-dev-cuda-${CUDA_MAJOR}" || \
             apt-get -y install --no-install-recommends "libcudnn${CUDNN_MAJOR}-dev" || true
         fi
     fi

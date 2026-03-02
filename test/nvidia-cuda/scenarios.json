@@ -44,5 +44,13 @@
                 "cudaVersion": "11.8"
             }
         }
+    },
+    "debian-13": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian-13",
+        "features": {
+            "nvidia-cuda": {
+                "cudaVersion": "13.1"
+            }
+        }
     }
 }
