@@ -131,10 +131,16 @@ KEYRING_PATH="/usr/share/keyrings/nvidia-cuda-keyring.gpg"
 
 echo "Setting up NVIDIA CUDA repository: ${NVIDIA_REPO_URL}"
 
-# Download and install NVIDIA keyring
-curl -fsSL "${NVIDIA_REPO_URL}/cuda-keyring_1.1-1_all.deb" -o /tmp/cuda-keyring.deb
-dpkg -i /tmp/cuda-keyring.deb
-rm /tmp/cuda-keyring.deb
+# Debian 13 (trixie) uses Sequoia PGP (sqv) which rejects NVIDIA's SHA1-signed
+# repo key. Set up the repo as trusted until NVIDIA updates their signing key.
+if [ "${ID}" = "debian" ] && [ "${VERSION_ID}" = "13" ]; then
+    echo "deb [trusted=yes] ${NVIDIA_REPO_URL} /" > /etc/apt/sources.list.d/cuda-${DISTRO_STRING}-${architecture}.list
+else
+    # Download and install NVIDIA keyring
+    curl -fsSL "${NVIDIA_REPO_URL}/cuda-keyring_1.1-1_all.deb" -o /tmp/cuda-keyring.deb
+    dpkg -i /tmp/cuda-keyring.deb
+    rm /tmp/cuda-keyring.deb
+fi
 
 # Force apt-get update after adding new repository
 apt_get_update_done=false
